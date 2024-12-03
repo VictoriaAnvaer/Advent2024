@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class Day01 {
     public static void main(String[] args) {
-        ArrayList<String> fileData = getFileData("src/input01.txt");
+        ArrayList<String> fileData = getFileData("src/index01.txt");
         ArrayList<String> listOne = new ArrayList<>();
         ArrayList<String> listTwo = new ArrayList<>();
         for (int i = 0; i < fileData.size(); i++) {
@@ -18,27 +18,21 @@ public class Day01 {
         Collections.sort(listTwo);
         int sum = 0;
         for (int i = 0; i < listOne.size(); i++) {
-           sum = sum + Math.abs(Integer.parseInt(listOne.get(i)) - Integer.parseInt(listTwo.get(i)));
+            sum = sum + Math.abs(Integer.parseInt(listOne.get(i)) - Integer.parseInt(listTwo.get(i)));
         }
 
         System.out.println(sum);
         int sumOne = 0;
+        int sumCurrent = 0;
         for (int i = 0; i < listOne.size(); i++) {
             int current = Integer.parseInt(listOne.get(i));
-            int sumCurrent = 0;
-            while(listOne.get(i).equals(listOne.get(i + 1))) {
-                i++;
-            }
             for (int x = 0; x < listTwo.size(); x++) {
-                int compare = Integer.parseInt(listTwo.get(i));
-                if (compare > current) {
-                    x = 0;
-                }
-                if (compare == current) {
+                if (Integer.parseInt(listTwo.get(x)) == current) {
                     sumCurrent++;
                 }
             }
             sumOne = sumOne + (sumCurrent * current);
+            sumCurrent = 0;
         }
         System.out.println(sumOne);
     }
