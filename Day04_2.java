@@ -3,46 +3,28 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Day04 {
+public class Day04_2 {
     public static void main(String[] args) {
         ArrayList<String> fileData = getFileData("src/input.txt");
         int count = 0;
         for(int i = 0; i < fileData.size(); i++) {
             String currentWord = fileData.get(i);
             for (int x = 0; x < currentWord.length(); x++) {
-                if (x + 3 < currentWord.length()) {
-                    if (xmasCheck(currentWord.substring(x, x + 4))) {
-                        count++; //horizontal
-                    }
-                }
-                if ((currentWord.charAt(x) == 'X' || currentWord.charAt(x) == 'S') && (i + 3 < fileData.size())) {
-                    String verticalWord = "";
-                    for(int y = 0; y < 4; y++) {
-                        verticalWord+=fileData.get(i + y).substring(x, x+1);
-                    }
-                    if (xmasCheck(verticalWord)) {
-                        count++;
-                    }
+                if ((currentWord.charAt(x) == 'M' || currentWord.charAt(x) == 'S') && (i + 2 < fileData.size())) {
 
-                    if (x < fileData.size() - 3) {
+                    if (x < currentWord.length() - 2) {
                         String left = "";
-                        for(int z = 0; z < 4; z++) {
+                        for(int z = 0; z < 3; z++) {
                             left+=fileData.get(i + z).substring(x + z, x + z + 1);
                         }
                         if (xmasCheck(left)) {
-                            count++;
-                        }
-                    }
-
-                    if (x > 2) {
-                        String right = "";
-                        for(int z = 0; z < 4; z++) {
-                            right+=fileData.get(i + z).substring(x - z, x - z + 1);
-                        }
-                        System.out.println(right);
-                        if (xmasCheck(right)) {
-                            count++;
-                            System.out.println(right);
+                            String right = "";
+                            for (int y = 0; y < 3; y++) {
+                                right+=fileData.get(i + y).substring(x - y + 2, x - y + 3);
+                            }
+                            if (xmasCheck(right)) {
+                                count++;
+                            }
                         }
                     }
                 }
@@ -52,7 +34,7 @@ public class Day04 {
         System.out.println(count);
     }
     public static boolean xmasCheck(String word) {
-        return (word.contains("XMAS") || word.contains("SAMX"));
+        return (word.equals("SAM") || word.equals("MAS"));
     }
     public static ArrayList<String> getFileData(String fileName) {
         ArrayList<String> fileData = new ArrayList<String>();
