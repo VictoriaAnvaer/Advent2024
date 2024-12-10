@@ -8,50 +8,35 @@ public class Day05_02 {
     public static void main(String[] args) {
         ArrayList<String> rules = getFileData("src/input.txt");
         ArrayList<String> update = getFileData("src/input2.txt");
-        ArrayList<String> rulesRight = new ArrayList<>();
-        String[] updateList = update.get(0).split(",");
+        int count = 0;
 
-
-        for (int i = 0; i < rules.size(); i++) {
-            String[] splitRules = rules.get(i).split("\\|");
-            rulesRight.add(splitRules[1]);
+        for (int i = 0; i < update.size(); i++) {
+            boolean incorrect = false;
+            String[] currentList = update.get(i).split(",");
+            ArrayList<String> rulesRight = new ArrayList<>();
+            for (int x = 0; x < rules.size(); x++) {
+                String[] splitRules = rules.get(x).split("\\|");
+                String numOne = splitRules[0];
+                String numTwo = splitRules[1];
+                if (update.get(i).contains(numOne) && update.get(i).contains(numTwo)) {
+                    rulesRight.add(numTwo);
+                    if (update.get(i).indexOf(numOne) > update.get(i).indexOf(numTwo)) {
+                        incorrect = true;
+                    }
+                }
+            }
+            if (incorrect) {
+                int middleIndex = currentList.length/2;
+                for (int y = 0; y < rulesRight.size(); y++) {
+                    if (Collections.frequency(rulesRight, rulesRight.get(y)) == middleIndex) {
+                        count+=Integer.parseInt(rulesRight.get(y));
+                        y = rulesRight.size();
+                    }
+                }
+            }
         }
-        for (int i = 0; i < rulesRight.size(); i++) {
-            System.out.println(Collections.frequency(rulesRight, rulesRight.get(i)));
-        }
-        System.out.println(rulesRight);
+        System.out.println(count);
 
-
-
-
-//        ArrayList<String> incorrect = new ArrayList<>();
-//        for (int i = 0; i < rules.size(); i++) {
-//            String[] splitRules = rules.get(i).split("\\|");
-//            String numOne = splitRules[0];
-//            String numTwo = splitRules[1];
-//            for (int x = 0; x < update.size(); x++) {
-//                String current = update.get(x);
-//                if (current.contains(numOne) && current.contains(numTwo)) {
-//                    if (current.indexOf(numOne) > current.indexOf(numTwo)) {
-//                        incorrect.add(update.get(x));
-//                        update.remove(x);
-//                        x--;
-//                    }
-//                }
-//            }
-//        }
-//        System.out.println(incorrect);
-//
-//        int count = 0;
-
-
-
-//        for (int x = 0; x < incorrect.size(); x++) {
-//            String[] split = incorrect.get(x).split(",");
-//            int middle = (split.length/2);
-//            count+=Integer.parseInt(split[middle]);
-//        }
-//        System.out.println(count);
     }
     public static ArrayList<String> getFileData(String fileName) {
         ArrayList<String> fileData = new ArrayList<String>();
