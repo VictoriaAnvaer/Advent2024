@@ -10,11 +10,40 @@ public class Day09 {
         for (int i = 0; i < input.length(); i++) {
             String current = input.substring(i, i + 1);
             if (i % 2 == 0) {
-                sorted+=input.substring(i, i + 1);
+                sorted+=getBlock(String.valueOf(i/2), Integer.parseInt(current));
+            } else {
+                sorted+=getBlock(".", Integer.parseInt(current));
             }
         }
         System.out.println(sorted);
+
+        String sortedNew = "";
+        int countEnd = 0;
+        for (int i = 0; i < sorted.length()/2; i++) {
+            if (sorted.substring(i, i+1).equals(".")) {
+                for (int x = sorted.length() - countEnd; x > 0; x--) {
+                    if (!sorted.substring(x - 1, x).equals(".")) {
+                        sortedNew+=sorted.substring(x-1, x);
+                        x = 0;
+                        countEnd++;
+                    }
+                }
+            } else {
+                sortedNew+=sorted.substring(i, i+1);
+            }
+            System.out.println(sortedNew);
+
+        }
     }
+
+    public static String getBlock(String num, int loopNum) {
+        String finalVal = "";
+        for (int i = 0; i < loopNum; i++) {
+            finalVal+=num;
+        }
+        return finalVal;
+    }
+
     public static String getFileData(String fileName) {
         ArrayList<String> fileData = new ArrayList<String>();
         try {
