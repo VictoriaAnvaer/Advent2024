@@ -3,28 +3,29 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Day09 {
+public class Day09_Array {
     public static void main(String[] args) {
         String input = getFileData("src/input.txt");
-        String sorted = "";
+        ArrayList<String> sorted = new ArrayList<>();
         int count = 0;
         for (int i = 0; i < input.length(); i++) {
             String current = input.substring(i, i + 1);
             if (i % 2 == 0) {
-                sorted+=getBlock(String.valueOf(count), Integer.parseInt(current));
+                sorted =getBlock(String.valueOf(count), Integer.parseInt(current), sorted);
                 count++;
             } else {
-                sorted+=getBlock(".", Integer.parseInt(current));
+                sorted = getBlock(".", Integer.parseInt(current), sorted);
             }
         }
         System.out.println("finished");
+        ArrayList<String> newSorted = new ArrayList<>();
 
 
-        for (int i = 1; i < sorted.length(); i++) {
-            if (sorted.substring(i, i+1).equals(".")) {
-                for (int x = sorted.length(); x > i; x--) {
-                    if (!sorted.substring(x - 1, x).equals(".")) {
-                        sorted = sorted.substring(0, i) + sorted.substring(x-1, x) + sorted.substring(i + 1, x-1) + "." + sorted.substring(x);
+        for (int i = 1; i < sorted.size(); i++) {
+            if (sorted.get(i).equals(".")) {
+                for (int x = sorted.size(); x > i; x--) {
+                    if (!sorted.get(x - 1).equals(".")) {
+                        //sorted = sorted.substring(0, i) + sorted.substring(x-1, x) + sorted.substring(i + 1, x-1) + "." + sorted.substring(x);
                         x = 0;
                     }
                 }
@@ -33,22 +34,21 @@ public class Day09 {
         System.out.println("finished");
 
         count = 0;
-        for (int i = 0; i < sorted.length(); i++) {
-            if (sorted.substring(i, i+1).equals(".")) {
+        for (int i = 0; i < sorted.size(); i++) {
+            if (sorted.get(i).equals(".")) {
                 break;
             }
-            count+=(i * Integer.parseInt(sorted.substring(i, i+1)));
+            count+=(i * Integer.parseInt(sorted.get(i)));
         }
         System.out.println("finished");
         System.out.println(count);
     }
 
-    public static String getBlock(String num, int loopNum) {
-        String finalVal = "";
+    public static ArrayList<String> getBlock(String num, int loopNum, ArrayList<String> sorted) {
         for (int i = 0; i < loopNum; i++) {
-            finalVal+=num;
+            sorted.add(num);
         }
-        return finalVal;
+        return sorted;
     }
 
     public static String getFileData(String fileName) {
@@ -69,3 +69,4 @@ public class Day09 {
         }
     }
 }
+
