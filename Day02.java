@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class Day02 {
     public static void main(String[] args) {
-        ArrayList<String> fileData = getFileData("src/index02.txt");
+        ArrayList<String> fileData = getFileData("src/input.txt");
         int safe = fileData.size();
         for (int i = 0; i < fileData.size(); i++) {
             String[] split = fileData.get(i).split(" ");
@@ -17,6 +17,12 @@ public class Day02 {
                     safe--;
                     x = split.length;
                 } else if (digit1 - 3 > digit2 || digit1 + 3 < digit2) {
+                    safe--;
+                    x = split.length;
+                } else if (digit2 - 3 > digit3 || digit2 + 3 < digit3) {
+                    safe--;
+                    x = split.length;
+                } else if (digit3 > digit2 && digit1 > digit2 || digit3 < digit2 && digit1 < digit2) {
                     safe--;
                     x = split.length;
                 }
